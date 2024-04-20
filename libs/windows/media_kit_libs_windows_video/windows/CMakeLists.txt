@@ -28,7 +28,8 @@ function(download_and_verify url md5 locationForArchive)
   # Download the archive if it doesn't exist.
   if(NOT EXISTS "${locationForArchive}")
     message(STATUS "Downloading archive from ${url}...")
-    file(DOWNLOAD "${url}" "${locationForArchive}")
+#    file(DOWNLOAD "${url}" "${locationForArchive}")
+    configure_file(${url} ${locationForArchive} COPYONLY)
     message(STATUS "Downloaded archive to ${locationForArchive}.")
 
     # Verify MD5 of the newly downloaded file.
@@ -37,7 +38,7 @@ function(download_and_verify url md5 locationForArchive)
     if(md5 STREQUAL ARCHIVE_MD5)
       message(STATUS "${locationForArchive} Verification successful.")
     else()
-      message(FATAL_ERROR "${locationForArchive} Integrity check failed, please try to re-build project again.")
+      message(FATAL_ERROR "${locationForArchive} ${url} Integrity check failed, please try to re-build project again.")
     endif()
   endif()
 endfunction()
@@ -64,7 +65,8 @@ endfunction()
 set(LIBMPV "mpv-dev-x86_64-20230924-git-652a1dd.7z")
 
 # Download URL & MD5 hash of the libmpv archive.
-set(LIBMPV_URL "https://github.com/media-kit/libmpv-win32-video-build/releases/download/2023-09-24/${LIBMPV}")
+#set(LIBMPV_URL "https://github.com/media-kit/libmpv-win32-video-build/releases/download/2023-09-24/${LIBMPV}")
+set(LIBMPV_URL "include/${LIBMPV}")
 set(LIBMPV_MD5 "a832ef24b3a6ff97cd2560b5b9d04cd8")
 
 # Download location of the libmpv archive.
@@ -100,7 +102,8 @@ endif()
 set(ANGLE "ANGLE.7z")
 
 # Download URL & MD5 hash of the ANGLE archive.
-set(ANGLE_URL "https://github.com/alexmercerind/flutter-windows-ANGLE-OpenGL-ES/releases/download/v1.0.0/ANGLE.7z")
+#set(ANGLE_URL "https://github.com/alexmercerind/flutter-windows-ANGLE-OpenGL-ES/releases/download/v1.0.0/ANGLE.7z")
+set(ANGLE_URL "include/ANGLE.7z")
 set(ANGLE_MD5 "e5be38d0e1c5cbe5f70e53701ea8b6c9")
 
 # Download location of the ANGLE archive.
